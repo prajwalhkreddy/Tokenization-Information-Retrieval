@@ -17,11 +17,12 @@ public class Tokenizer {
 	public static void main(String[] args) {
 		listFilesForFolder(folder);
 		fileReader();
-		System.out.println("Map:"+countMap);
+		System.out.println("Map:"+countMap.size());
 	}
 	
 	@SuppressWarnings("resource")
 	public static void fileReader() {
+		int x=0;
 
 		try {
 			for (int i = 0; i < fileNames.size(); i++) {
@@ -30,15 +31,19 @@ public class Tokenizer {
 
 				
 				Scanner readFile = new Scanner(new File(tempPath))
-						.useDelimiter("[^a-zA-Z0-9]+");
+						.useDelimiter("\\s");
 
 				while (readFile.hasNext()) {
+					
 					String word = readFile.next().toLowerCase();
 
 					if (countMap.containsKey(word)) {
+						x++;
 						countMap.put(word, countMap.get(word) + 1);
 					} else {
+						x++;
 						countMap.put(word, 1);
+						
 					}
 				}
 
@@ -46,7 +51,7 @@ public class Tokenizer {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("Total Count:"+x);
 	}
 
 	public static void listFilesForFolder(final File folder) {
