@@ -15,12 +15,13 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 public class Tokenizer {
-	final static File folder = new File("Cranfield");
+	
 	public static List<String> fileNames = new ArrayList<String>();
 	public static Map<String, Integer> countMap = new HashMap<String, Integer>();
 	public static Map<String, Integer> sortedCountMap = new TreeMap<String, Integer>();
 	public static Map<String, Integer> stemMap = new HashMap<String, Integer>();
 	public static Map<String, Integer> sortedStemMap = new TreeMap<String, Integer>();
+	public static File folder;
 	static int totalNumOfTokens = 0;
 	static int numOfTokenPerDoc = 0;
 	static double avgNumOfTokenPerDoc = 0.0;
@@ -30,6 +31,12 @@ public class Tokenizer {
 	static long endTime=0;
 
 	public static void main(String[] args) {
+		
+		if(args[0].isEmpty()){
+			System.out.println("Please Enter the Path of Cranfield Dataset");
+			System.exit(0);
+		}
+		folder = new File(args[0]);
 		long startTime = Calendar.getInstance().getTimeInMillis();
 		listFilesForFolder(folder);
 		fileReader();
@@ -70,7 +77,7 @@ public class Tokenizer {
 		try {
 			for (int i = 0; i < fileNames.size(); i++) {
 
-				String tempPath = folder + "\\" + fileNames.get(i);
+				String tempPath = folder + "//" + fileNames.get(i);
 
 				Scanner readFile = new Scanner(new File(tempPath));
 
@@ -143,7 +150,7 @@ public class Tokenizer {
 		}
 	}
 
-	// The below method recieved the coutMap and store it based on values and
+	// The below method receives the countMap/stemMap and sorts it based on values and
 	// stores it in a TreeMap.
 	// Reference :
 	// http://stackoverflow.com/questions/109383/how-to-sort-a-mapkey-value-on-the-values-in-java
@@ -174,6 +181,7 @@ public class Tokenizer {
 
 	}
 
+	//Traverse the Directory Structure and add all fileNames to a List
 	public static void listFilesForFolder(final File folder) {
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
