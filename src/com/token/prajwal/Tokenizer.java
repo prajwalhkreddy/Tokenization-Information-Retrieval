@@ -32,7 +32,7 @@ public class Tokenizer {
 
 	public static void main(String[] args) {
 		
-		if(args[0].isEmpty()){
+		if(args.length==0){
 			System.out.println("Please Enter the Path of Cranfield Dataset");
 			System.exit(0);
 		}
